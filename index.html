@@ -1,0 +1,31 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  <head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Record Management</title> 
+  </head> 
+  <body> 
+    <h1>Manage Records</h1> 
+    <h2>Add Record</h2> 
+    <form action="/add" method="post"> 
+      <input type="text" name="value" placeholder="Value" required> 
+      <input type="text" name="ip" placeholder="IP Address" required> 
+      <button type="submit">Add Record</button> 
+    </form> 
+    <h2>Records</h2> 
+    <ul> 
+      {% for record in records %} 
+      <li> 
+        {{ record[1] }} ({{ record[2] }}) 
+        <form action="/delete/{{ record[0] }}" method="post" style="display:inline;"> 
+          <button type="submit">Delete</button> 
+        </form> 
+      </li> 
+      {% endfor %} 
+    </ul> 
+    <form action="/reset" method="post"> 
+      <button type="submit">Reset Service (Delete All Records)</button> 
+    </form> 
+  </body> 
+</html>
