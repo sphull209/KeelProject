@@ -1,6 +1,14 @@
 #! /bin/bash
 yum update -y
-yum install httpd -y
-systemctl start httpd
-systemctl enable httpd
-echo "hello world from $(hostname -f)" | tee /var/www/html/index.html
+yum install python3 -y
+mkdir flask-app
+cd flask-app
+python3 -m venv venv
+source venv/bin/activate
+
+pip install flask
+
+pip install pipenv
+pipenv --version
+pip install psycopg2-binary
+pipenv install psycopg2
