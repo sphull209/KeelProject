@@ -23,3 +23,52 @@ resource "aws_db_instance" "Keel_postgressql_db" {
   }
 
 } 
+
+
+resource "aws_db_parameter_group" "my_postgresql_param_group" {
+  name        = "my-postgresql-param-group"
+  family      = "postgres14"
+  description = "Custom parameter group for PostgreSQL logging"
+
+  parameter {
+    name  = "log_statement"
+    value = "mod"  # Log INSERT, UPDATE, DELETE
+  }
+
+  parameter {
+    name  = "log_duration"
+    value = "1"  # Log query durations
+  }
+
+  parameter {
+    name  = "log_line_prefix"
+    value = "%m [%p] %d %r %u %a %t"  # Prefix for logs
+  }
+
+  parameter {
+    name  = "log_connections"
+    value = "true"
+  }
+
+  parameter {
+    name  = "log_disconnections"
+    value = "true"
+  }
+}
+
+resource "aws_iam_role" "rds_monitoring_role" {
+  name = "rds-monitoring-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action    = "sts:AssumeRole"
+        Effect    = "Allow"
+        Principal = {
+          Service = "rds.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
