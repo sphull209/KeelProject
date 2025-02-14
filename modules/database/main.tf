@@ -13,6 +13,8 @@ resource "aws_db_instance" "Keel_postgressql_db" {
   db_subnet_group_name = var.Keel-db-subnetgroup_name
   vpc_security_group_ids = [var.Keel_backend_db_tier_sg_id]
   identifier = var.db_identifier
+  monitoring_interval    = 60
+  log_group_name         = "/aws/rds/instance/my-rds-instance/logs"
   skip_final_snapshot = "true"
   tags = {
     Name = "Keel_postgressql_db"
