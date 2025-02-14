@@ -73,6 +73,10 @@ module "database" {
   Keel_backend_db_tier_sg_id = module.networking.Keel_backend_db_tier_sg
 }
 
+module "cloudwatch" {
+  source      = "./modules/cloudwatch"
+  log_group_name = var.log_group_name
+}
 module "s3-artifact" {
   source = "./modules/s3-artifact"
   s3_artifact_bucket = var.s3_artifact_bucket
