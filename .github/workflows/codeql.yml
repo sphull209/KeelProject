@@ -85,7 +85,8 @@ jobs:
       shell: bash
       run: |
         if [ ${{ matrix.language }} == 'python' ]; then
-          pip install -r requirements.txt
+          pip install pipenv
+          pip install psycopg2-binary
         fi
 
     - name: Perform CodeQL Analysis
