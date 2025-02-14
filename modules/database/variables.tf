@@ -35,6 +35,16 @@ variable "Keel-db-subnetgroup_name" {
   description = "name of the db subnet group"
 }
 
+variable "monitoring_interval" {
+  description = "Monitoring interval (seconds)"
+  type        = number
+}
+
+variable "log_group_name" {
+  description = "CloudWatch Log Group name"
+  type        = string
+}
+
 variable "Keel_backend_db_tier_sg_id" {
   type = string
   description = "id of security group assisgned to backend db"
