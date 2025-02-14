@@ -63,6 +63,12 @@ variable "db_identifier" {
   description = "Keel postgressql db identifier"
 }
 
+variable "log_group_name" {
+  description = "Name of the CloudWatch log group"
+  type        = string
+  default     = "/aws/rds/instance/my-rds-instance/logs"
+}
+
 variable "access_ip" {
   type = string
   description = "sepcific ip address only permit for ssh into bastion instance"
