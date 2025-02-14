@@ -58,9 +58,9 @@ resource "aws_autoscaling_group" "keel_frontend_web_asg" {
   
   name = "keel-frontend-web-asg"
   vpc_zone_identifier = var.keel_web_pubsub
-  max_size            = 3
-  min_size            = 2
-  desired_capacity    = 2
+  max_size            = 2
+  min_size            = 1
+  desired_capacity    = 1
 
 
   launch_template {
