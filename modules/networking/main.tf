@@ -227,6 +227,14 @@ resource "aws_security_group" "Keel_frontend_web_tier_sg" {
     security_groups = [aws_security_group.Keel_alb_sg.id]
   }
 
+ ingress {
+    description = "allow flask port"
+    from_port = 5000
+    to_port = 5000
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   ingress {
     description     = "Allow SSH from Bastion host"
     from_port       = 22
@@ -288,14 +296,14 @@ resource "aws_security_group" "Keel_backend_app_tier_sg" {
 # backend(db tier) db sg
 
 resource "aws_security_group" "Keel_backend_db_tier_sg" {
-  description = "allow MySql port inbound from Keel_backend_app_tier_sg"
+  description = "allow PostgreSQL port inbound from Keel_backend_app_tier_sg"
   name = "Keel-backend-db-tier-sg"
   vpc_id = aws_vpc.Keel_vpc.id
 
   ingress {
-    description = "allow MySql port Keel_backend_app_tier_sg"
-    from_port = 3306
-    to_port = 3306
+    description = "allow PostgreSQL port Keel_backend_app_tier_sg"
+    from_port = 5432
+    to_port = 5432
     protocol = "tcp"
     security_groups = [aws_security_group.Keel_backend_app_tier_sg.id]
   }
