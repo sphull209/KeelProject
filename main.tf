@@ -73,14 +73,13 @@ module "database" {
   Keel_backend_db_tier_sg_id = module.networking.Keel_backend_db_tier_sg
 }
 
-module "lambda_function" {
+module "lambda" {
   source = "./modules/lambda"
-
   lambda_function_name = "delete-record-lambda"
   lambda_role_name     = "lambda-execution-role"
   lambda_handler       = "lambda_function.lambda_handler"
   lambda_runtime       = "python3.9"
-  lambda_zip_file      = "path_to_your_lambda_zip_file.zip"
+  lambda_zip_file      = "path_to_your_lambda_zip_file.zip"  # Provide the correct path
   timeout              = 60
   memory_size          = 128
 
