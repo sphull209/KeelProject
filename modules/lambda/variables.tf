@@ -1,38 +1,46 @@
-// variables.tf
+# lambda_module/variables.tf
 
-variable "db_instance_identifier" {
-  description = "The name of the PostgreSQL RDS instance."
+variable "lambda_function_name" {
+  description = "The name of the Lambda function"
   type        = string
-  default     = "my-postgres-db"
 }
 
-variable "db_username" {
-  description = "The username for the PostgreSQL database."
+variable "lambda_role_name" {
+  description = "The name of the IAM role for the Lambda function"
   type        = string
-  default     = "myuser"
 }
 
-variable "db_password" {
-  description = "The password for the PostgreSQL database."
+variable "lambda_handler" {
+  description = "The function handler"
   type        = string
-  sensitive   = true
-  default     = "mypassword"
+  default     = "lambda_function.lambda_handler"
 }
 
-variable "db_name" {
-  description = "The name of the PostgreSQL database."
+variable "lambda_runtime" {
+  description = "The runtime of the Lambda function"
   type        = string
-  default     = "mydatabase"
+  default     = "python3.9"
 }
 
-variable "lambda_timeout" {
-  description = "Lambda function timeout in seconds."
+variable "lambda_zip_file" {
+  description = "The path to the Lambda function zip file"
+  type        = string
+}
+
+variable "timeout" {
+  description = "The timeout for the Lambda function"
   type        = number
   default     = 60
 }
 
-variable "lambda_memory_size" {
-  description = "Lambda function memory size in MB."
+variable "memory_size" {
+  description = "The memory size for the Lambda function"
   type        = number
   default     = 128
+}
+
+variable "environment_variables" {
+  description = "Environment variables for the Lambda function"
+  type        = map(string)
+  default     = {}
 }
