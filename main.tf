@@ -73,6 +73,25 @@ module "database" {
   Keel_backend_db_tier_sg_id = module.networking.Keel_backend_db_tier_sg
 }
 
+module "lambda_function" {
+  source = "./modules/lambda"
+
+  lambda_function_name = "delete-record-lambda"
+  lambda_role_name     = "lambda-execution-role"
+  lambda_handler       = "lambda_function.lambda_handler"
+  lambda_runtime       = "python3.9"
+  lambda_zip_file      = "path_to_your_lambda_zip_file.zip"
+  timeout              = 60
+  memory_size          = 128
+
+  environment_variables = {
+    DB_HOST     = "your-rds-instance-endpoint"
+    DB_USER     = "your-db-username"
+    DB_PASSWORD = "your-db-password"
+    DB_NAME     = "your-db-name"
+  }
+}
+
 module "cloudwatch" {
   source      = "./modules/cloudwatch"
   log_group_name = var.log_group_name
