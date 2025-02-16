@@ -91,6 +91,62 @@ module "lambda" {
   }
 }
 
+# Create ECS Cluster
+resource "aws_ecs_cluster" "ecs_cluster" {
+  name = "my-ecs-cluster"
+}
+
+module "ecs_task" {
+  source = "./modules/ecs_task_module"
+
+  task_definition_name = "my-ecs-task"
+  execution_role_arn   = aws_iam_role.ecs_execution_role.arn
+  task_role_arn        = aws_iam_role.ecs_task_role.arn
+  cluster_id           = aws_ecs_cluster.ecs_cluster.id
+  container_image      = "my-docker-image:latest"  # Update with your image URL
+  service_name         = "my-ecs-service"
+  db_host              = aws_db_instance.postgres_db.endpoint
+  db_user              = var.db_user
+  db_password          = var.db_password
+  db_name              = var.db_name
+  subnets              = var.subnets
+  security_groups      = var.security_groups
+}
+
+resource "aws_iam_role" "ecs_execution_role" {
+  name = "ecs_execution_role"
+  
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action    = "sts:AssumeRole"
+        Effect    = "Allow"
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role" "ecs_task_role" {
+  name = "ecs_task_role"
+  
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action    = "sts:AssumeRole"
+        Effect    = "Allow"
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
 module "cloudwatch" {
   source      = "./modules/cloudwatch"
   log_group_name = var.log_group_name
