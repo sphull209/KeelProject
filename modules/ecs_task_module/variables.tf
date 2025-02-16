@@ -1,4 +1,3 @@
-
 variable "task_definition_name" {
   description = "The name of the ECS task definition"
   type        = string
@@ -12,23 +11,6 @@ variable "execution_role_arn" {
 variable "task_role_arn" {
   description = "The ARN of the task role for the ECS task"
   type        = string
-}
-
-variable "cluster_id" {
-  description = "The ECS cluster ID"
-  type        = string
-}
-
-variable "cpu" {
-  description = "The CPU units for the ECS task"
-  type        = string
-  default     = "256"
-}
-
-variable "memory" {
-  description = "The memory in MiB for the ECS task"
-  type        = string
-  default     = "512"
 }
 
 variable "container_image" {
@@ -59,6 +41,18 @@ variable "db_password" {
 variable "db_name" {
   description = "The name of the PostgreSQL database"
   type        = string
+}
+
+variable "cpu" {
+  description = "The CPU units for the ECS task"
+  type        = string
+  default     = "256"
+}
+
+variable "memory" {
+  description = "The memory for the ECS task"
+  type        = string
+  default     = "512"
 }
 
 variable "subnets" {
