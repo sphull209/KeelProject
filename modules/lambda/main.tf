@@ -45,7 +45,7 @@ resource "aws_iam_role_policy_attachment" "lambda_execution_policy_attach" {
 # Lambda function to delete records from PostgreSQL
 resource "aws_lambda_function" "delete_record_lambda" {
   function_name = "delete-record-lambda"
-  runtime       = "python3.8"
+  runtime       = "python3.9"
   role          = aws_iam_role.lambda_execution_role.arn
   handler       = "lambda_function.lambda_handler"
   filename      = "delete-record-lambda.zip"  # Path to the ZIP file
