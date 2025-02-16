@@ -103,48 +103,14 @@ module "ecs_task" {
   execution_role_arn   = aws_iam_role.ecs_execution_role.arn
   task_role_arn        = aws_iam_role.ecs_task_role.arn
   cluster_id           = aws_ecs_cluster.ecs_cluster.id
-  container_image      = "my-docker-image:latest"  # Update with your image URL
+  container_image      = "my-docker-image:latest"
   service_name         = "my-ecs-service"
-  db_host              = aws_db_instance.postgres_db.endpoint
-  db_user              = var.db_user
-  db_password          = var.db_password
-  db_name              = var.db_name
-  subnets              = var.subnets
-  security_groups      = var.security_groups
-}
-
-resource "aws_iam_role" "ecs_execution_role" {
-  name = "ecs_execution_role"
-  
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action    = "sts:AssumeRole"
-        Effect    = "Allow"
-        Principal = {
-          Service = "ecs-tasks.amazonaws.com"
-        }
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role" "ecs_task_role" {
-  name = "ecs_task_role"
-  
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action    = "sts:AssumeRole"
-        Effect    = "Allow"
-        Principal = {
-          Service = "ecs-tasks.amazonaws.com"
-        }
-      }
-    ]
-  })
+  db_host              = module.rds.db_endpoint
+  db_user              = "admin"
+  db_password          = "password"
+  db_name              = "my_database"
+  subnets              = ["subnet-xxxxxx"]
+  security_groups      = ["sg-xxxxxx"]
 }
 
 module "cloudwatch" {
